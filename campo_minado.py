@@ -55,3 +55,31 @@ def abrir_casa(tabuleiro, linha, coluna, minas):
         return True
     tabuleiro[linha][coluna] = contar_minas_vizinhas(linha, coluna, minas, len(tabuleiro))
     return False
+
+
+# Pessoa 2 - Ricardo: conta somente as casas seguras que continuam fechadas.
+def contar_casas_seguras_restantes(tabuleiro, minas):
+    restantes = 0
+    # Percorre todas as linhas e colunas, sem contar as posicoes das minas.
+    for linha in range(len(tabuleiro)):
+        for coluna in range(len(tabuleiro[linha])):
+            if tabuleiro[linha][coluna] == "-" and (linha, coluna) not in minas:
+                restantes = restantes + 1
+    return restantes
+
+
+# Recebe o estado apos a jogada e devolve o resultado, sem alterar os dados.
+# jogador_atual identifica quem acabou de jogar: "P1" ou "P2".
+def verificar_resultado(tabuleiro, minas, pontos, jogador_atual, atingiu_mina):
+    # A derrota por mina tem prioridade sobre as casas restantes e os pontos.
+    if atingiu_mina:
+        if jogador_atual == "P1":
+            return "P2"
+        return "P1"
+    if contar_casas_seguras_restantes(tabuleiro, minas) > 0:
+        return "EM_ANDAMENTO"
+    if pontos["P1"] > pontos["P2"]:
+        return "P1"
+    elif pontos["P2"] > pontos["P1"]:
+        return "P2"
+    return "Empate"
