@@ -44,3 +44,14 @@ def contar_minas_vizinhas(linha, coluna, minas, tamanho):
                     if (linha_vizinha, coluna_vizinha) in minas:
                         quantidade = quantidade + 1
     return quantidade
+
+
+# Pessoa 2 - Ricardo: abre somente a casa escolhida, sem abertura em cascata.
+# Recebe coordenadas validas de uma casa fechada, conferidas pela leitura da jogada.
+# Devolve True ao atingir uma mina e False ao abrir uma casa segura.
+def abrir_casa(tabuleiro, linha, coluna, minas):
+    if (linha, coluna) in minas:
+        tabuleiro[linha][coluna] = "*"
+        return True
+    tabuleiro[linha][coluna] = contar_minas_vizinhas(linha, coluna, minas, len(tabuleiro))
+    return False
