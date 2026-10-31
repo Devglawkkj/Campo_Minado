@@ -9,6 +9,22 @@ def criar_tabuleiro(tamanho):
         tabuleiro.append(casas)
     return tabuleiro
 
+
+# Mostra as casas e a numeração das linhas e colunas, sem alterar a matriz.
+def mostrar_tabuleiro(tabuleiro):
+    print("   ", end="")
+    for coluna in range(len(tabuleiro[0])):
+        print(str(coluna + 1) + " ", end="")
+    print()
+
+    # O laço externo percorre as linhas; o interno mostra cada casa da linha.
+    for linha in range(len(tabuleiro)):
+        print(str(linha + 1) + "  ", end="")
+        for coluna in range(len(tabuleiro[linha])):
+            print(str(tabuleiro[linha][coluna]) + " ", end="")
+        print()
+
+
 # Pessoa 2 - Ricardo: mapa fixo do tabuleiro padrao de 5 x 5.
 # As coordenadas internas comecam em zero: (linha, coluna).
 minas = {(0, 3), (1, 1), (3, 2), (4, 4)}
