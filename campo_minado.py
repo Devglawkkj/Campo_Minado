@@ -110,3 +110,39 @@ def ler_jogada(tabuleiro):
         if tabuleiro[linha][coluna] == "-":
             return (linha, coluna)
         print("Essa casa já foi aberta! Escolha outra posição.")
+
+
+# Conduz uma partida nova e devolve somente o resultado para o menu registrar.
+def jogar_partida(jogadores, minas, tamanho):
+    tabuleiro = criar_tabuleiro(tamanho)
+    pontos = {"P1": 0, "P2": 0}
+    identificadores = ("P1", "P2")
+    indice_jogador = 0
+    resultado = "EM_ANDAMENTO"
+    mostrar_tabuleiro(tabuleiro)
+
+    while resultado == "EM_ANDAMENTO":
+        jogador_atual = identificadores[indice_jogador]
+        print("Vez de " + jogadores[indice_jogador] + " (" + jogador_atual + ").")
+        posicao = ler_jogada(tabuleiro)
+        atingiu_mina = abrir_casa(tabuleiro, posicao[0], posicao[1], minas)
+        if atingiu_mina:
+            print(jogadores[indice_jogador] + " abriu uma mina!")
+        else:
+            pontos[jogador_atual] = pontos[jogador_atual] + 1
+
+        mostrar_tabuleiro(tabuleiro)
+        print("Pontos: " + jogadores[0] + " = " + str(pontos["P1"])
+              + " | " + jogadores[1] + " = " + str(pontos["P2"]))
+        resultado = verificar_resultado(tabuleiro, minas, pontos, jogador_atual, atingiu_mina)
+        # Só troca o jogador depois de uma jogada válida e se a partida continuar.
+        if resultado == "EM_ANDAMENTO":
+            indice_jogador = 1 - indice_jogador
+
+    if resultado == "Empate":
+        print("A partida terminou empatada!")
+    elif resultado == "P1":
+        print("Vencedor: " + jogadores[0] + " (P1)!")
+    else:
+        print("Vencedor: " + jogadores[1] + " (P2)!")
+    return resultado
