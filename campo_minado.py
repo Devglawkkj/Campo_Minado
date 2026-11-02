@@ -146,3 +146,37 @@ def jogar_partida(jogadores, minas, tamanho):
     else:
         print("Vencedor: " + jogadores[1] + " (P2)!")
     return resultado
+
+
+# Pessoa 2 - Ricardo: registra um resultado final no placar e no historico.
+# O menu deve chamar esta funcao uma unica vez por partida encerrada.
+def registrar_resultado(resultado, placar, historico):
+    if resultado == "P1" or resultado == "P2":
+        placar[resultado] = placar[resultado] + 1
+    elif resultado == "Empate":
+        placar["Empates"] = placar["Empates"] + 1
+    else:
+        # Uma partida em andamento ou um resultado invalido nao e registrado.
+        return
+    historico.append(resultado)
+
+
+# Exibe o placar acumulado sem modificar as quantidades registradas.
+def mostrar_placar(placar):
+    print("\nPlacar da sessão:")
+    print("Vitórias de P1: " + str(placar["P1"]))
+    print("Vitórias de P2: " + str(placar["P2"]))
+    print("Empates: " + str(placar["Empates"]))
+
+
+# Exibe os resultados na ordem das partidas, numeradas a partir de um.
+def mostrar_historico(historico):
+    print("\nHistórico das partidas:")
+    if len(historico) == 0:
+        print("Nenhuma partida foi registrada.")
+    else:
+        for indice in range(len(historico)):
+            if historico[indice] == "Empate":
+                print("Partida " + str(indice + 1) + ": empate.")
+            else:
+                print("Partida " + str(indice + 1) + ": vencedor " + historico[indice] + ".")
