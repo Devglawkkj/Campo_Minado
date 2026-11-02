@@ -83,3 +83,30 @@ def verificar_resultado(tabuleiro, minas, pontos, jogador_atual, atingiu_mina):
     elif pontos["P2"] > pontos["P1"]:
         return "P2"
     return "Empate"
+
+
+# Lê um inteiro positivo no intervalo informado e repete até a entrada ser válida.
+def ler_numero(mensagem, minimo, maximo):
+    while True:
+        entrada = input(mensagem).strip()
+        # Limita o texto antes de converter e rejeita dígitos fora de 0 a 9.
+        if entrada.isdigit() and len(entrada) <= len(str(maximo)):
+            digitos_validos = True
+            for caractere in entrada:
+                if caractere not in "0123456789":
+                    digitos_validos = False
+            if digitos_validos:
+                numero = int(entrada)
+                if numero >= minimo and numero <= maximo:
+                    return numero
+        print("Entrada inválida! Digite de " + str(minimo) + " a " + str(maximo) + ".")
+
+
+# Devolve uma posição fechada, com índices internos a partir de zero.
+def ler_jogada(tabuleiro):
+    while True:
+        linha = ler_numero("Escolha a linha (1 a " + str(len(tabuleiro)) + "): ", 1, len(tabuleiro)) - 1
+        coluna = ler_numero("Escolha a coluna (1 a " + str(len(tabuleiro[linha])) + "): ", 1, len(tabuleiro[linha])) - 1
+        if tabuleiro[linha][coluna] == "-":
+            return (linha, coluna)
+        print("Essa casa já foi aberta! Escolha outra posição.")
