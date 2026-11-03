@@ -180,3 +180,68 @@ def mostrar_historico(historico):
                 print("Partida " + str(indice + 1) + ": empate.")
             else:
                 print("Partida " + str(indice + 1) + ": vencedor " + historico[indice] + ".")
+
+
+# Apresenta as regras sem revelar as posições das minas.
+def mostrar_regras():
+    print("\nRegras do Campo Minado:")
+    print("Dois jogadores alternam jogadas em um tabuleiro de 5 x 5 com quatro minas fixas.")
+    print("Escolha linha e coluna de 1 a 5 para abrir uma casa fechada.")
+    print("Uma casa segura vale um ponto e mostra quantas minas existem nas até oito vizinhas.")
+    print("O número zero também é mostrado; não há abertura automática de outras casas.")
+    print("Quem abrir uma mina perde imediatamente e o outro jogador vence.")
+    print("Se todas as casas seguras forem abertas, vence quem tiver mais pontos; pontos iguais dão empate.")
+    print("Entradas inválidas e casas repetidas não consomem a vez.")
+    print("Cada nova partida começa com P1 e zera os pontos, preservando placar e histórico da sessão.")
+
+
+# Valida a confirmação e devolve True para jogar novamente ou False para o menu.
+def confirmar_reinicio():
+    while True:
+        resposta = input("Jogar novamente? (S/N): ").strip().upper()
+        if resposta in {"S", "N"}:
+            return resposta == "S"
+        print("Resposta inválida! Digite S ou N.")
+
+
+# Mantém os jogadores, o placar e o histórico durante toda a execução.
+def menu_principal():
+    jogadores = []
+    while len(jogadores) < 2:
+        nome = input("Nome do jogador P" + str(len(jogadores) + 1) + ": ").strip().upper()
+        if nome == "":
+            print("O nome não pode ficar vazio.")
+        elif nome in jogadores:
+            print("Escolha um nome diferente do outro jogador.")
+        else:
+            jogadores.append(nome)
+
+    placar = {"P1": 0, "P2": 0, "Empates": 0}
+    historico = []
+    while True:
+        print("\nCampo Minado - " + jogadores[0] + " (P1) e " + jogadores[1] + " (P2)")
+        print("1 - Jogar")
+        print("2 - Ver regras")
+        print("3 - Ver placar")
+        print("4 - Ver histórico")
+        print("5 - Sair")
+        opcao = ler_numero("Escolha uma opção: ", 1, 5)
+        if opcao == 1:
+            jogar_novamente = True
+            while jogar_novamente:
+                resultado = jogar_partida(jogadores, minas, 5)
+                registrar_resultado(resultado, placar, historico)
+                mostrar_placar(placar)
+                jogar_novamente = confirmar_reinicio()
+        elif opcao == 2:
+            mostrar_regras()
+        elif opcao == 3:
+            mostrar_placar(placar)
+        elif opcao == 4:
+            mostrar_historico(historico)
+        else:
+            print("Sessão encerrada. Até a próxima!")
+            break
+
+
+menu_principal()
