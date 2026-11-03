@@ -182,6 +182,40 @@ def mostrar_historico(historico):
                 print("Partida " + str(indice + 1) + ": vencedor " + historico[indice] + ".")
 
 
+# Pessoa 2 - Ricardo: resume a sessao sem alterar placar ou historico.
+# Empates e vitorias do adversario interrompem a sequencia de um jogador.
+def mostrar_estatisticas(placar, historico):
+    total = len(historico)
+    vitorias_p1 = historico.count("P1")
+    vitorias_p2 = historico.count("P2")
+    porcentagem_p1 = 0.0
+    porcentagem_p2 = 0.0
+    if total > 0:
+        # Arredonda para uma casa decimal usando apenas aritmetica e int().
+        porcentagem_p1 = int(vitorias_p1 * 1000 / total + 0.5) / 10
+        porcentagem_p2 = int(vitorias_p2 * 1000 / total + 0.5) / 10
+
+    sequencias = {"P1": 0, "P2": 0}
+    maiores = {"P1": 0, "P2": 0}
+    # Percorre as partidas em ordem e acompanha cada jogador separadamente.
+    for resultado in historico:
+        for jogador in ("P1", "P2"):
+            if resultado == jogador:
+                sequencias[jogador] = sequencias[jogador] + 1
+                if sequencias[jogador] > maiores[jogador]:
+                    maiores[jogador] = sequencias[jogador]
+            else:
+                sequencias[jogador] = 0
+
+    print("\nEstatísticas da sessão:")
+    print("Total de partidas: " + str(total))
+    mostrar_placar(placar)
+    print("Porcentagem de vitórias de P1: " + str(porcentagem_p1) + "%")
+    print("Porcentagem de vitórias de P2: " + str(porcentagem_p2) + "%")
+    print("Maior sequência de vitórias de P1: " + str(maiores["P1"]))
+    print("Maior sequência de vitórias de P2: " + str(maiores["P2"]))
+
+
 # Apresenta as regras sem revelar as posições das minas.
 def mostrar_regras():
     print("\nRegras do Campo Minado:")
@@ -240,6 +274,7 @@ def menu_principal():
         elif opcao == 4:
             mostrar_historico(historico)
         else:
+            mostrar_estatisticas(placar, historico)
             print("Sessão encerrada. Até a próxima!")
             break
 
