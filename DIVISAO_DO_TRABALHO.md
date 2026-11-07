@@ -1,7 +1,7 @@
-# Campo Minado: proposta de divisão para validação
+# Campo Minado: divisão do trabalho
 
-Status: rascunho para aprovação da dupla. Ainda não autoriza implementar as etapas abaixo.
-Integrantes: Pessoa 1 (nome a confirmar) e Pessoa 2 (nome a confirmar).
+Status: divisão validada pela dupla; as etapas de programação foram integradas à main.
+Integrantes: Pessoa 1 — Glauckyon (Devglawkkj); Pessoa 2 — Ricardo (joaodeoliveira2811-debug).
 Repositório: https://github.com/Devglawkkj/Campo_Minado
 
 ## 1. Regras propostas para o jogo
@@ -16,7 +16,7 @@ Repositório: https://github.com/Devglawkkj/Campo_Minado
 - Desafio escolhido: estatísticas da sessão ao sair, com total, vitórias, empates, porcentagens e maior sequência de vitórias de cada jogador. Empate interrompe a sequência; sessão vazia não pode dividir por zero.
 - Como 25 casas menos quatro minas deixa 21 casas seguras, o modo padrão termina por pontos sem empate. Para testar e demonstrar empate, usar cenário documentado com cinco minas (20 casas seguras), sem alterar as regras de pontuação.
 
-Estas são decisões de implementação propostas, não exigências adicionais atribuídas ao professor.
+Estas são decisões de implementação aprovadas pela dupla; não são exigências adicionais atribuídas ao professor.
 
 ## 2. Restrições do trabalho
 
@@ -30,7 +30,7 @@ Adaptar a verificação ao Campo Minado: percorrer a matriz com laços para cont
 
 ## 3. Divisão de implementação
 
-| Pessoa | Responsabilidade | Funções propostas |
+| Pessoa | Responsabilidade | Funções atribuídas |
 | --- | --- | --- |
 | 1 | Criação e exibição da matriz | criar_tabuleiro(tamanho), mostrar_tabuleiro(tabuleiro) |
 | 1 | Entradas, regras e menu | ler_numero(mensagem, minimo, maximo), ler_jogada(tabuleiro), mostrar_regras(), confirmar_reinicio(), menu_principal() |
@@ -46,7 +46,7 @@ Ambas programam, testam e explicam suas funções. Pessoa 1 não implementa ante
 - Matriz: casas fechadas usam "-"; casas abertas guardam número de 0 a 8; mina aberta usa "*". Exibição não revela minas escondidas.
 - Coordenadas internas começam em zero. ler_jogada devolve a tupla (linha, coluna), válida e ainda fechada.
 - criar_tabuleiro devolve uma matriz nova, com linhas independentes, criada com for e append().
-- minas: conjunto fixo de tuplas (linha, coluna), sem duplicatas e dentro dos limites. O mapa final será definido na etapa da lógica.
+- minas: conjunto fixo de tuplas (linha, coluna), sem duplicatas e dentro dos limites. O mapa padrão implementado contém {(0, 3), (1, 1), (3, 2), (4, 4)}.
 - jogadores: lista com dois nomes distintos; usar identificadores estáveis "P1" e "P2" nos resultados. pontos e placar usam esses identificadores; placar também possui "Empates".
 - abrir_casa modifica uma única casa e devolve True se atingiu mina; False se abriu casa segura. O controlador soma um ponto apenas no segundo caso.
 - verificar_resultado devolve "EM_ANDAMENTO", "P1", "P2" ou "Empate". Primeiro trata mina, depois conta casas seguras com for aninhado, depois compara pontos. Não lê teclado nem altera placar.
@@ -58,7 +58,7 @@ Se um contrato precisar mudar, combinar primeiro no pull request e atualizar est
 
 ## 5. Etapas pequenas e branches
 
-Após aprovar este documento, estabelecer main como base compartilhada. Como o repositório ainda não tem commits, a primeira publicação precisa criar essa base; depois as mudanças entram por pull request.
+A main é a base compartilhada. As etapas de programação abaixo já foram integradas por pull request; a tabela preserva a divisão e a finalidade de cada branch.
 
 As branches são nomeadas pela tarefa, sem nome ou número do integrante. A autoria fica registrada nos commits com a identidade Git de cada pessoa.
 
@@ -66,7 +66,7 @@ Todas as branches seguintes nascem da main atualizada. Não criar branches indep
 
 | Ordem | Pessoa | Branch e finalidade | Commit sugerido |
 | --- | --- | --- | --- |
-| 0 | 1 | docs/divisao-trabalho: proposta atual para validação | Documenta divisão do trabalho |
+| 0 | 1 | docs/divisao-trabalho: planejamento inicial da divisão | Documenta divisão do trabalho |
 | 1 | 1 | feat/tabuleiro: criar a matriz | Cria função de tabuleiro |
 | 2 | 1 | feat/exibicao: exibir matriz numerada | Exibe linhas e colunas do tabuleiro |
 | 3 | 1 | feat/entradas: validar números e casas | Valida entradas e casas repetidas |
@@ -95,7 +95,7 @@ Cada pessoa deve ter pelo menos cinco commits reais de programação, distribuí
 8. Preservar os commits e sua autoria ao integrar, preferindo merge commit. Evitar squash que elimine os commits individuais exigidos.
 9. Atualizar main nos dois computadores antes da próxima etapa dependente. Resolver conflitos preservando o trabalho das duas pessoas.
 
-Esta proposta será commitada localmente para revisão. Publicação e pull request ficam para depois da validação solicitada nesta etapa.
+A programação está integrada à main. Correções e documentação devem continuar em branches por tarefa, com commit e pull request próprios.
 
 ## 7. Testes e entregas
 
@@ -108,9 +108,9 @@ Testar cada função separadamente quando estiver pronta. Na integração, regis
 - Repositório privado: garantir acesso ao professor @profmartinz; não mudar visibilidade nem convidar colaborador nesta etapa.
 - Entrega: GitHub, relatório PDF e vídeo pelo formulário informado no enunciado, até 08/11/2026 às 23:59.
 
-## 8. Validação solicitada
+## 8. Situação da revisão
 
-Confirmar: nomes e associação Pessoa 1/Pessoa 2; divisão das funções; regras do jogo; desafio de estatísticas; uso do mapa com cinco minas para demonstrar empate; integração em sequência e revisão por pull request.
+A divisão foi validada, e criação, exibição, entradas, lógica, turnos, menu, placar, histórico e estatísticas estão implementados. O mapa com cinco minas é um cenário de teste para empate, sem mudança no mapa padrão ou opção adicional no menu.
 
-Após aprovação: preparar a base compartilhada e seguir uma etapa por vez. Nenhum código do jogo foi criado nesta proposta.
+Os testes e as pendências de entrega estão em REVISAO_REQUISITOS.md. Relatório, vídeo e formulário devem ser conferidos separadamente; a revisão do código não comprova a conclusão dessas entregas.
 
