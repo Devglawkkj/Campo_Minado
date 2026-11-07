@@ -55,8 +55,8 @@ O programa fica em um único arquivo, `campo_minado.py`, organizado em funções
 
 | Integrante | Parte |
 | --- | --- |
-| Pessoa 1 — Devglawkkj | Criação e exibição do tabuleiro, validação das entradas, integração dos turnos, regras, menu e reinício |
-| Pessoa 2 — Ricardo | Mapa de minas, contagem de vizinhas, abertura de casas, resultado, placar e histórico; estatísticas da sessão previstas como próxima entrega |
+| Pessoa 1 — Glauckyon (Devglawkkj) | Criação e exibição do tabuleiro, validação das entradas, integração dos turnos, regras, menu e reinício |
+| Pessoa 2 — Ricardo (joaodeoliveira2811-debug) | Mapa de minas, contagem de vizinhas, abertura de casas, resultado, placar, histórico e estatísticas da sessão |
 
 ### Funções da Pessoa 1
 
@@ -71,15 +71,28 @@ O programa fica em um único arquivo, `campo_minado.py`, organizado em funções
 | `confirmar_reinicio()` | Valida S/N e devolve um booleano indicando se haverá nova partida |
 | `menu_principal()` | Identifica os jogadores e mantém a navegação, o placar e o histórico da sessão |
 
-### Funções da Pessoa 2 já integradas
+### Funções da Pessoa 2
 
-`contar_minas_vizinhas()`, `abrir_casa()`, `contar_casas_seguras_restantes()`, `verificar_resultado()`, `registrar_resultado()`, `mostrar_placar()` e `mostrar_historico()`.
+| Função | Finalidade e retorno |
+| --- | --- |
+| `contar_minas_vizinhas(linha, coluna, minas, tamanho)` | Percorre as vizinhas válidas e devolve a quantidade de minas |
+| `abrir_casa(tabuleiro, linha, coluna, minas)` | Atualiza uma casa; devolve True se atingiu mina e False se abriu casa segura |
+| `contar_casas_seguras_restantes(tabuleiro, minas)` | Percorre a matriz e devolve quantas casas seguras continuam fechadas |
+| `verificar_resultado(tabuleiro, minas, pontos, jogador_atual, atingiu_mina)` | Devolve P1, P2, Empate ou EM_ANDAMENTO |
+| `registrar_resultado(resultado, placar, historico)` | Atualiza o placar e adiciona o resultado ao histórico; não devolve valor explícito |
+| `mostrar_placar(placar)` | Exibe vitórias e empates acumulados |
+| `mostrar_historico(historico)` | Exibe os resultados na ordem das partidas |
+| `mostrar_estatisticas(placar, historico)` | Exibe total, vitórias, empates, porcentagens e maiores sequências |
 
-A descrição detalhada dessas funções e do desafio será complementada pelo integrante responsável. A divisão e os contratos estão em [DIVISAO_DO_TRABALHO.md](DIVISAO_DO_TRABALHO.md).
+A divisão e os contratos estão em [DIVISAO_DO_TRABALHO.md](DIVISAO_DO_TRABALHO.md).
 
 ## Desafio de lógica
 
-O desafio escolhido é **Estatísticas da sessão**: total de partidas, vitórias de cada jogador, empates, porcentagens e maior sequência de vitórias. Essa implementação e a exibição ao sair ainda estão pendentes na versão documentada neste README.
+O desafio **Estatísticas da sessão** está implementado em `mostrar_estatisticas(placar, historico)`, chamada pelo menu ao escolher **5 - Sair**. Usa `len()` para o total, `count()` para as vitórias e laços sobre o histórico para as sequências. Empate ou vitória do adversário interrompe a sequência. As porcentagens consideram todas as partidas e são arredondadas para uma casa decimal. Sem partidas, apresenta zero sem dividir por zero.
+
+## Revisão de requisitos
+
+A revisão do código e os resultados de 20 casos de teste estão em [REVISAO_REQUISITOS.md](REVISAO_REQUISITOS.md). O documento inclui as verificações de conteúdo permitido e as pendências externas ao programa.
 
 ## Entregas em preparação
 
