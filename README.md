@@ -30,7 +30,7 @@ Informe os nomes dos dois jogadores. Nomes vazios ou iguais são recusados; espa
 | 2 | Consultar as regras |
 | 3 | Consultar o placar acumulado |
 | 4 | Consultar o histórico das partidas |
-| 5 | Encerrar a sessão |
+| 5 | Exibir as estatísticas e encerrar a sessão |
 
 Durante a partida, digite primeiro a linha e depois a coluna, de 1 a 5. Após o resultado, responda **S** para uma nova partida ou **N** para voltar ao menu. Letras minúsculas e espaços nas extremidades são aceitos nessa confirmação.
 
@@ -56,7 +56,7 @@ O programa fica em um único arquivo, `campo_minado.py`, organizado em funções
 | Integrante | Parte |
 | --- | --- |
 | Pessoa 1 — Devglawkkj | Criação e exibição do tabuleiro, validação das entradas, integração dos turnos, regras, menu e reinício |
-| Pessoa 2 — Ricardo | Mapa de minas, contagem de vizinhas, abertura de casas, resultado, placar e histórico; estatísticas da sessão previstas como próxima entrega |
+| Pessoa 2 — Ricardo | Mapa de minas, contagem de vizinhas, abertura de casas, resultado, placar, histórico e estatísticas da sessão |
 
 ### Funções da Pessoa 1
 
@@ -71,15 +71,38 @@ O programa fica em um único arquivo, `campo_minado.py`, organizado em funções
 | `confirmar_reinicio()` | Valida S/N e devolve um booleano indicando se haverá nova partida |
 | `menu_principal()` | Identifica os jogadores e mantém a navegação, o placar e o histórico da sessão |
 
-### Funções da Pessoa 2 já integradas
+### Funções da Pessoa 2
 
-`contar_minas_vizinhas()`, `abrir_casa()`, `contar_casas_seguras_restantes()`, `verificar_resultado()`, `registrar_resultado()`, `mostrar_placar()` e `mostrar_historico()`.
+| Função | Finalidade e retorno |
+| --- | --- |
+| `contar_minas_vizinhas(linha, coluna, minas, tamanho)` | Conta e devolve o número de minas nas casas vizinhas, respeitando os limites do tabuleiro |
+| `abrir_casa(tabuleiro, linha, coluna, minas)` | Atualiza a casa escolhida e devolve `True` ao atingir uma mina ou `False` ao abrir uma casa segura |
+| `contar_casas_seguras_restantes(tabuleiro, minas)` | Conta e devolve a quantidade de casas seguras ainda fechadas |
+| `verificar_resultado(tabuleiro, minas, pontos, jogador_atual, atingiu_mina)` | Determina o estado após a jogada e devolve `EM_ANDAMENTO`, `P1`, `P2` ou `Empate` |
+| `registrar_resultado(resultado, placar, historico)` | Atualiza o placar e acrescenta o resultado ao histórico; ignora resultados inválidos ou partidas em andamento |
+| `mostrar_placar(placar)` | Exibe as vitórias de cada jogador e os empates acumulados |
+| `mostrar_historico(historico)` | Exibe os resultados na ordem das partidas ou informa que nenhuma foi registrada |
+| `mostrar_estatisticas(placar, historico)` | Exibe o total de partidas, o placar, as porcentagens e as maiores sequências de vitórias de cada jogador |
 
-A descrição detalhada dessas funções e do desafio será complementada pelo integrante responsável. A divisão e os contratos estão em [DIVISAO_DO_TRABALHO.md](DIVISAO_DO_TRABALHO.md).
+As funções de exibição e registro não devolvem um valor explícito.
 
 ## Desafio de lógica
 
-O desafio escolhido é **Estatísticas da sessão**: total de partidas, vitórias de cada jogador, empates, porcentagens e maior sequência de vitórias. Essa implementação e a exibição ao sair ainda estão pendentes na versão documentada neste README.
+O desafio **Estatísticas da sessão** está implementado em `mostrar_estatisticas(placar, historico)` e é exibido ao escolher **5 — Sair** no menu.
+
+- Total de partidas encerradas, vitórias de P1 e P2 e quantidade de empates.
+- Porcentagem de vitórias de cada jogador sobre o total de partidas, incluindo os empates no denominador, arredondada para uma casa decimal.
+- Maior sequência de vitórias consecutivas de cada jogador. Um empate ou uma vitória do adversário interrompe a sequência.
+- Se nenhuma partida tiver sido jogada, os totais, as porcentagens e as sequências aparecem zerados, sem divisão por zero.
+
+Por exemplo, o histórico `P1, P1, Empate, P2` resulta em quatro partidas, duas vitórias de P1 (50,0%), uma de P2 (25,0%) e um empate. As maiores sequências são duas vitórias para P1 e uma para P2. No terminal, os percentuais usam ponto decimal.
+
+## Arquivos do projeto
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| [campo_minado.py](campo_minado.py) | Código do jogo, menu e estatísticas da sessão |
+| [README.md](README.md) | Instruções de execução, regras e documentação das funções |
 
 ## Entregas em preparação
 
